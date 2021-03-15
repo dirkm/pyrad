@@ -21,7 +21,7 @@ def EncodeOctets(str):
     if len(str) > 253:
         raise ValueError('Can only encode strings of <= 253 characters')
 
-    if str.startswith(b'0x'):
+    if str.startswith('0x'):
         hexstring = str.split(b'0x')[1]
         return binascii.unhexlify(hexstring)
     else:

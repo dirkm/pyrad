@@ -445,7 +445,8 @@ class Packet(OrderedDict):
             value = struct.pack('!L', key[0]) + \
                 self._PktEncodeAttribute(key[1], value)
             key = 26
-
+        if isinstance(value, str):
+            value = value.encode()
         return struct.pack('!BB', key, (len(value) + 2)) + value
 
     def _PktEncodeTlv(self, tlv_key, tlv_value):
