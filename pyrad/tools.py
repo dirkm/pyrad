@@ -21,7 +21,10 @@ def EncodeOctets(str):
     if len(str) > 253:
         raise ValueError('Can only encode strings of <= 253 characters')
 
-    if str.startswith('0x'):
+    if isinstance(str, six.text_type):
+        value = value.encode()
+
+    if str.startswith(b'0x'):
         hexstring = str.split(b'0x')[1]
         return binascii.unhexlify(hexstring)
     else:
@@ -111,7 +114,7 @@ def EncodeAscendBinary(str):
 
     trailer = 8 * b'\x00'
 
-    result = b''.join((terms['family'], terms['action'], terms['direction'], b'\x00', 
+    result = b''.join((terms['family'], terms['action'], terms['direction'], b'\x00',
         terms['src'], terms['dst'], terms['srcl'], terms['dstl'], terms['proto'], b'\x00',
         terms['sport'], terms['dport'], terms['sportq'], terms['dportq'], b'\x00\x00', trailer))
     return result
