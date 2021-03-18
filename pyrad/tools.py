@@ -22,7 +22,7 @@ def EncodeOctets(str):
         raise ValueError('Can only encode strings of <= 253 characters')
 
     if isinstance(str, six.text_type):
-        value = value.encode()
+        str = str.encode()
 
     if str.startswith(b'0x'):
         hexstring = str.split(b'0x')[1]
