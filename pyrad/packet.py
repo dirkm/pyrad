@@ -306,7 +306,10 @@ class Packet(OrderedDict):
         """
         attr = self.dict.attributes[key.partition(':')[0]]
 
-        (key, value) = self._EncodeKeyValues(key, value)
+        try:
+            (key, value) = self._EncodeKeyValues(key, value)
+        except Exception as e:
+            raise type(e)("encoding key " + key + " failed with exception: " +  e.message)
 
         if attr.is_sub_attribute:
             tlv = self.setdefault(self._EncodeKey(attr.parent.name), {})
